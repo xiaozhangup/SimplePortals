@@ -36,6 +36,7 @@ public class Portal {
     private final SimplePortals pluginInstance;
     private Region region;
     private SerializableLocation teleportLocation;
+    private boolean vision;
     private String portalId, serverSwitchName, message, title, subTitle, barMessage;
     private boolean commandsOnly, disabled;
     private List<String> commands;
@@ -53,6 +54,7 @@ public class Portal {
         setCommandsOnly(false);
         setCooldown(0);
         setDelay(0);
+        setVision(false);
 
         setLastFillMaterial(Material.AIR);
         if (getRegion() != null && getRegion().getPoint1() != null)
@@ -108,6 +110,7 @@ public class Portal {
             yaml.set("bar-message", getBarMessage());
             yaml.set("cooldown", getCooldown());
             yaml.set("delay", getDelay());
+            yaml.set("vision", isVision());
 
             yaml.save(file);
         } catch (IOException e) {
@@ -267,7 +270,7 @@ public class Portal {
         if (getServerSwitchName() == null || getServerSwitchName().isEmpty() || getServerSwitchName().equalsIgnoreCase("none")) {
             Location location = getTeleportLocation().asBukkitLocation();
             if (location != null) {
-                if (getPluginInstance().getConfig().getBoolean("keep-teleport-head-axis")) {
+                if (getPluginInstance().getConfig().getBoolean("keep-teleport-head-axis") && !isVision()) {
                     location.setYaw(entity.getLocation().getYaw());
                     location.setPitch(entity.getLocation().getPitch());
                 }
@@ -615,5 +618,13 @@ public class Portal {
     public int getDelay() {return delay;}
 
     public void setDelay(int delay) {this.delay = delay;}
+
+    public boolean isVision() {
+        return vision;
+    }
+
+    public void setVision(boolean vision) {
+        this.vision = vision;
+    }
 
 }

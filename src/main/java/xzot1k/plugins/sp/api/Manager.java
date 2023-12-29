@@ -429,6 +429,7 @@ public class Manager {
         if (yaml.contains("bar-message")) portal.setBarMessage(yaml.getString("bar-message"));
         if (yaml.contains("cooldown")) portal.setCooldown(yaml.getInt("cooldown", 0));
         if (yaml.contains("delay")) portal.setDelay(yaml.getInt("delay", 0));
+        portal.setVision(yaml.getBoolean(".vision", false));
 
         return portal;
     }
@@ -695,6 +696,7 @@ public class Manager {
             portal.setServerSwitchName(yaml.getString(portalId + ".portal-server"));
             portal.setCommandsOnly(yaml.getBoolean(portalId + ".commands-only"));
             portal.setCommands(yaml.getStringList(portalId + ".commands"));
+            portal.setVision(yaml.getBoolean(portalId + ".vision", false));
             portal.setCooldown(yaml.getInt("cooldown", 0));
 
             String materialName = yaml.getString(portalId + ".last-fill-material");
